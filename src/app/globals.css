@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 0.25rem;
+    background-color: #3b82f6;
+  }
+  .btn .primary {
+    background-color: #2563eb;
+    color: #fff;
+  }
+}
+
+@layer utilities {
+}
+
+@layer base {
+}
