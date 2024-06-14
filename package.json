@@ -6,20 +6,29 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "next": "14.2.4",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@prisma/client": "^5.15.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "bcryptjs": "^2.4.3",
+    "chart.js": "^4.4.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
+    "framer-motion": "^11.2.10",
+    "jsonwebtoken": "^9.0.2",
     "postcss": "^8",
+    "prisma": "^5.15.0",
+    "react-chartjs-2": "^5.2.0",
     "react-icons": "^5.2.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
