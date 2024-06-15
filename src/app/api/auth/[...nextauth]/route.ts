@@ -56,7 +56,7 @@ const handler = NextAuth({
       session.user = token as any;
       return session;
     },
-    async signIn({ account, profile }): Promise<string | boolean> {
+    async signIn({ account, profile }) {
       if (!profile?.email) {
         throw new Error("No profile");
       }
