@@ -3,7 +3,7 @@ import "./globals.css";
 import { Roboto } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import SessionAuthProvider from "@/core/context/SessionAuthProvider";
-import FiltersProvider from "@/core/context/Filters";
+import FiltersProvider from "@/core/context/filters";
 import { Toaster } from "sonner";
 
 // Metadata is key for SEO

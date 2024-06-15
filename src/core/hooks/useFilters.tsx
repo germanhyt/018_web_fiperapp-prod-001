@@ -1,6 +1,6 @@
 "use client";
 import { useContext } from "react";
-import { FilterContext } from "@/core/context/Filters";
+import { FilterContext } from "@/core/context/filters";
 import { Operation } from "@/core/layouts/domain/Operation";
 
 const useFilters = () => {
