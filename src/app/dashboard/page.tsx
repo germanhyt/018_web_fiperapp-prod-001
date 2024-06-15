@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 
 const DashboardPage = () => {
   const [operations, setOperations] = useState<Operation[]>([]);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     const loadOperations = async (): Promise<Operation[]> => {
@@ -23,7 +23,7 @@ const DashboardPage = () => {
   }, []);
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <p className="text-center">Loading...</p>;
   }
 
   // Balance entre ingresos y gastos totales

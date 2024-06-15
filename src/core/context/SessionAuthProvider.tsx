@@ -12,5 +12,4 @@ const SessionAuthProvider = ({ children }: IProps) => {
 
 export default SessionAuthProvider;
 
-
 // Proveedor de Session

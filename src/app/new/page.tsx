@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import useSpeechRecognition from "@/core/hooks/useSpeechRecognition";
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
-import { toastSuccess } from "@/core/helpers/ToastHelper";
+import { useSession } from "next-auth/react";
 
 interface IProps {
   params: {
@@ -24,6 +24,9 @@ const NewPage = ({ params }: IProps) => {
 
   const titleRecognition = useSpeechRecognition();
   const descriptionRecognition = useSpeechRecognition();
+
+  // Session
+  const { status } = useSession();
 
   useEffect(() => {
     if (titleRecognition.text) {
@@ -98,6 +101,10 @@ const NewPage = ({ params }: IProps) => {
   useEffect(() => {
     setIsPageLoaded(true);
   }, []);
+
+  if (status === "loading") {
+    return <p className="text-center">Loading...</p>;
+  }
 
   return (
     <>

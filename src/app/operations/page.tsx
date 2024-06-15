@@ -12,7 +12,7 @@ const OperationsPage = () => {
   const { filtersOperations } = useFilters();
   const [operations, setOperations] = useState<Operation[]>([]);
   // Session
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     const loadOperations = async (): Promise<Operation[]> => {
@@ -32,28 +32,13 @@ const OperationsPage = () => {
   }, []);
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <p className="text-center">Loading...</p>;
   }
-
-  // useEffect(() => {
-  //   let filteredOperations: Operation[] = []; // Initialize filteredOperations as an empty array
-  //   if (operations.length > 0) {
-  //     console.log("operations2", operations);
-  //     operations.forEach(
-  //       (operation: Operation) =>
-  //         filteredOperations.push(...filtersOperations([operation])) // Wrap operation inside an array
-  //     );
-  //     console.log("filteredOperations", filteredOperations);
-  //   }
-  // }, [filtersOperations, operations]);
 
   return (
     <AnimatePresence>
       <Suspense fallback={<p>Loading...</p>}>
         <div className="container mx-auto">
-          {/* <div>
-            <code>{JSON.stringify(session, null, 2)}</code>
-          </div> */}
           <Filters />
           <Operations operations={filtersOperations(operations)} />
         </div>

@@ -12,12 +12,12 @@ const Filters = () => {
   const categoryFilterId = useId();
 
   const handleChangeMinPrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setFilters({ ...filters, minPrice: Number(e.target.value) });
   };
 
   const handleChangeCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setFilters({ ...filters, category: e.target.value });
   };
 
@@ -37,7 +37,8 @@ const Filters = () => {
           />
         </div>
         <div className="flex gap-2 items-center justify-center">
-          <label htmlFor={minPriceFilterId}>Fecha</label>
+          {/* // 1. */}
+          {/* <label htmlFor={minPriceFilterId}>Fecha</label>
           <input
             type="date"
             value={filters.date.toISOString().split("T")[0]}
@@ -46,6 +47,24 @@ const Filters = () => {
               // console.log("copy", e.target.value.split("T")[0]);
 
               // validar si se borra la fecha
+              if (e.target.value === "") {
+                setFilters({ ...filters, date: new Date() });
+                return;
+              }
+
+              setFilters({ ...filters, date: new Date(e.target.value) });
+            }}
+            className="border border-green-800 py-1 px-2 rounded-lg w-full sm-w-fit  focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-500 ease-in-out"
+          /> */}
+
+          {/* // 2. */}
+          {/* Filtrar por Mes  */}
+          <label htmlFor={minPriceFilterId}>Mes</label>
+          <input
+            type="month"
+            value={filters.date.toISOString().split("T")[0].slice(0, 7)}
+            onChange={(e) => {
+              console.log("original", e.target.value);
               if (e.target.value === "") {
                 setFilters({ ...filters, date: new Date() });
                 return;

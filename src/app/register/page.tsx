@@ -46,7 +46,6 @@ const RegisterPage = () => {
       setErrors(responseNextAuth.error.split(","));
       return;
     }
-    // console.log("responseNextAuth", responseNextAuth);
     router.push("/operations");
   };
 
