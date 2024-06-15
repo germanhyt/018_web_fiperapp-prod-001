@@ -55,6 +55,13 @@ const handler = NextAuth({
       session.user = token as any;
       return session;
     },
+    async signIn({ account, profile }): Promise<string | boolean> {
+      if (account?.provider === "google") {
+        return (profile?.email_verified &&
+          profile?.email?.endsWith("@example.com")) as string | boolean;
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
+    },
   },
   pages: {
     signIn: "/login",
