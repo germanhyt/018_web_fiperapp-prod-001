@@ -31,21 +31,20 @@ const handler = NextAuth({
         );
 
         const user = await res.json();
-        console.log("user.error", user);
 
         if (user.error) {
-          throw user.error;
+          throw new Error(user.message);
         }
         return user;
       },
     }),
     GoogleProvider({
       // For Local
-      // clientId: process.env.GOOGLE_CLIENT_ID as string,
-      // clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       // For Repository Remote or Github
-      clientId: "",
-      clientSecret: "",
+      // clientId: "",
+      // clientSecret: "",
     }),
   ],
   callbacks: {

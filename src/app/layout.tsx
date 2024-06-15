@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import SessionAuthProvider from "@/core/context/SessionAuthProvider";
 import FiltersProvider from "@/core/context/filters";
+import { Toaster } from "sonner";
 
 // Metadata is key for SEO
 export const metadata: Metadata = {
@@ -32,7 +33,8 @@ export default function RootLayout({
       <body className={roboto.className}>
         <SessionAuthProvider>
           <FiltersProvider>
-            <Navbar/>
+            <Navbar />
+            <Toaster visibleToasts={1} dir="auto" />
             <div>{children}</div>
           </FiltersProvider>
         </SessionAuthProvider>

@@ -1,7 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { FaMousePointer } from "react-icons/fa";
 
-const page = () => {
+const HomePage = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="w-2/3 mx-auto mt-12 bg-green-600 py-4 rounded-lg">
@@ -20,4 +22,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default HomePage;

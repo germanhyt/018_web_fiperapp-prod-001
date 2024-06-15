@@ -1,19 +1,21 @@
 "use client";
-
+import {
+  notificationError,
+  notificationInfo,
+} from "@/core/helpers/NotificationHelper";
+// import { toastSuccess } from "@/core/helpers/ToastHelper";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 
 const LoginPage = () => {
-  const [errors, setErrors] = useState<string[]>([]);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrors([]);
 
     const responseNextAuth = await signIn("credentials", {
       email,
@@ -21,12 +23,13 @@ const LoginPage = () => {
       redirect: false,
     });
 
-    console.log("response", responseNextAuth);
+    console.log(responseNextAuth?.error);
     if (responseNextAuth?.error) {
-      setErrors(responseNextAuth.error.split(","));
+      notificationError(responseNextAuth.error);
       return;
     }
 
+    notificationInfo(`Welcome to MyFiperApp ${email}`);
     router.push("/operations");
   };
 
@@ -71,18 +74,6 @@ const LoginPage = () => {
         <FaGoogle />
         Sign in google
       </button>
-
-      {errors.length > 0 && (
-        <div className="rounded-lg border-2 min-w-[500px] border-black bg-red-500 px-2 py-1 mt-2 ">
-          <ul className="mb-0">
-            {errors.map((error) => (
-              <li className="" key={error}>
-                {error}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
