@@ -40,11 +40,11 @@ const handler = NextAuth({
     }),
     GoogleProvider({
       // For Local
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      // clientId: process.env.GOOGLE_CLIENT_ID as string,
+      // // clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       // For Repository Remote or Github
-      // clientId: "",
-      // clientSecret: "",
+      clientId: "",
+      clientSecret: "",
     }),
   ],
   callbacks: {
