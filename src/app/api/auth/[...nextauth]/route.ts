@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import { prisma } from "@/core/libs/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -56,10 +57,22 @@ const handler = NextAuth({
       return session;
     },
     async signIn({ account, profile }): Promise<string | boolean> {
-      if (account?.provider === "google") {
-        return (profile?.email_verified &&
-          profile?.email?.endsWith("@example.com")) as string | boolean;
+      if (!profile?.email) {
+        throw new Error("No profile");
       }
+
+      await prisma.user.upsert({
+        where: { email: profile.email },
+        create: {
+          email: profile.email,
+          name: profile.name,
+          password: Math.random().toString(36).slice(-8),
+        },
+        update: {
+          name: profile.name,
+        },
+      });
+
       return true; // Do different verification for other providers that don't have `email_verified`
     },
   },
