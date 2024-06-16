@@ -57,23 +57,24 @@ const handler = NextAuth({
       return session;
     },
     async signIn({ account, profile }) {
-      if (!profile?.email) {
-        throw new Error("No profile");
+      if (account && account.provider === "google") {
+        if (!profile?.email) {
+          throw new Error("No profile");
+        }
+
+        await prisma.user.upsert({
+          where: { email: profile.email },
+          create: {
+            email: profile.email,
+            name: profile.name,
+            password: Math.random().toString(36).slice(-8),
+          },
+          update: {
+            name: profile.name,
+          },
+        });
       }
-
-      await prisma.user.upsert({
-        where: { email: profile.email },
-        create: {
-          email: profile.email,
-          name: profile.name,
-          password: Math.random().toString(36).slice(-8),
-        },
-        update: {
-          name: profile.name,
-        },
-      });
-
-      return true; // Do different verification for other providers that don't have `email_verified`
+      return true;
     },
   },
   pages: {

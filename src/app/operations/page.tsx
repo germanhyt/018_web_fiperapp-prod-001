@@ -12,16 +12,18 @@ const OperationsPage = () => {
   const { filtersOperations } = useFilters();
   const [operations, setOperations] = useState<Operation[]>([]);
   // Session
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const loadOperations = async (): Promise<Operation[]> => {
-      const response = await fetch("/api/operations", {
+      const response = await fetch(`/api/operations`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${session?.user?.token}`,
         },
       });
+
       const operations = await response.json();
       return operations;
     };
