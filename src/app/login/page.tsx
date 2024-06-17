@@ -22,7 +22,6 @@ const LoginPage = () => {
       redirect: false,
     });
 
-    // console.log(responseNextAuth?.error);
     if (responseNextAuth?.error) {
       notificationError(responseNextAuth.error);
       return;
@@ -67,6 +66,7 @@ const LoginPage = () => {
       </form>
 
       <button
+        type="button"
         onClick={() => signIn("google")}
         className="bg-green-600 text-white rounded p-2 flex items-center gap-2"
       >

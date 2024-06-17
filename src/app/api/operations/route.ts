@@ -28,13 +28,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "POST /operation " + operation.id });
   } else {
     if (data.userId && data.userId !== null) {
-      console.log("POST /operation list by userId");
+      // console.log("POST /operation list by userId");
       const operations = await prisma.operations.findMany({
         where: {
           userId: data.userId,
         },
       });
 
+      // console.log(operations);
       return NextResponse.json(operations);
     } else {
       return NextResponse.json([]);

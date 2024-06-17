@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/core/libs/prisma";
-import middleware from "next-auth/middleware";
 
 export async function GET(request, { params }) {
   const operation = await prisma.operations.findUnique({
@@ -16,7 +15,7 @@ export async function GET(request, { params }) {
     });
   }
 
-  return middleware(NextResponse.json(operation));
+  return NextResponse.json(operation);
 }
 
 export async function PUT(request, { params }) {
@@ -30,6 +29,7 @@ export async function PUT(request, { params }) {
       description: data.description,
       mount: data.mount,
       operationtypeId: data.operationtypeId,
+      userId: data.userId,
     },
   });
 

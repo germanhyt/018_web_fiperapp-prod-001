@@ -1,7 +1,10 @@
 import NextAuth from "next-auth";
 import { prisma } from "@/core/libs/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
+import bcrypt from "bcryptjs";
+import { notificationInfo } from "@/core/helpers";
+// import { notificationInfo } from "@/core/helpers";
 
 const handler = NextAuth({
   providers: [
@@ -53,8 +56,22 @@ const handler = NextAuth({
       return { ...token, ...user };
     },
     async session({ session, token }) {
+      // agregar userId al token para login con google
+      if (token.sub) {
+        const user = await prisma.user.findUnique({
+          where: { email: token.email ?? undefined },
+        });
+        token = { ...token, userId: user?.id };
+      }
+
       session.user = token as any;
+
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.includes("/")) return `${baseUrl}/operations`;
+
+      return baseUrl;
     },
     async signIn({ account, profile }) {
       if (account && account.provider === "google") {
@@ -67,7 +84,10 @@ const handler = NextAuth({
           create: {
             email: profile.email,
             name: profile.name,
-            password: Math.random().toString(36).slice(-8),
+            password: await bcrypt.hash(
+              Math.random().toString(36).slice(-8),
+              bcrypt.genSaltSync(10)
+            ),
           },
           update: {
             name: profile.name,
@@ -79,6 +99,7 @@ const handler = NextAuth({
   },
   pages: {
     signIn: "/login",
+    signOut: "/",
   },
 });
 

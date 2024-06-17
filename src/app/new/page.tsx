@@ -15,19 +15,23 @@ interface IProps {
 const NewPage = ({ params }: IProps) => {
   // Hooks
   const router = useRouter();
+  // - Para operaciones
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [mount, setMount] = useState<number>(0);
   const [operationtypeId, setOperationtypeId] = useState<number>(0);
+  // - Para reconocimiento de voz
   const [titleSpeech, setTitleSpeech] = useState<string>("");
   const [descriptionSpeech, setDescriptionSpeech] = useState<string>("");
 
+  // - Instancias de reconocimiento de voz
   const titleRecognition = useSpeechRecognition();
   const descriptionRecognition = useSpeechRecognition();
 
-  // Session
+  // - Session
   const { data: session, status } = useSession();
 
+  // Methos
   useEffect(() => {
     if (titleRecognition.text) {
       setTitleSpeech(titleRecognition.text);
@@ -40,13 +44,12 @@ const NewPage = ({ params }: IProps) => {
     }
   }, [descriptionRecognition.text]);
 
-  // Methods
   useEffect(() => {
     if (params.id) {
       fetch(`/api/operations/${params.id}`)
         .then((response) => response.json())
         .then((data) => {
-          // console.log("LOG 1", data);
+          console.log("LOG 1", data);
           setTitle(data.title);
           setDescription(data.description);
           setMount(data.mount);
@@ -65,7 +68,6 @@ const NewPage = ({ params }: IProps) => {
       operationtypeId: Number(form.operationtypeId.value),
       userId: session?.user?.userId,
     };
-    // console.log("LOG 2", operation);
 
     if (params.id) {
       const res = await fetch(`/api/operations/${params.id}`, {
@@ -76,7 +78,7 @@ const NewPage = ({ params }: IProps) => {
         body: JSON.stringify(operation),
       });
 
-      const data = await res.json();
+      await res.json();
       // console.log("LOG 3", data);
 
       router.refresh();
@@ -90,8 +92,8 @@ const NewPage = ({ params }: IProps) => {
         body: JSON.stringify(operation),
       });
 
-      await res.json();
-      // console.log(data);
+      const data = await res.json();
+      console.log(data);
 
       router.refresh();
       router.push("/operations");
