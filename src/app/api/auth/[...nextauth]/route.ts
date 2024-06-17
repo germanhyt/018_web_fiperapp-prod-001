@@ -69,7 +69,7 @@ const handler = NextAuth({
       return session;
     },
     async redirect({ url, baseUrl }) {
-      if (url.includes("/")) return `${baseUrl}/operations`;
+      if (url.includes("/")) return baseUrl;
 
       return baseUrl;
     },
