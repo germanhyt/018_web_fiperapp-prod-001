@@ -27,8 +27,8 @@ const LoginPage = () => {
       return;
     }
 
-    notificationInfo(`Welcome to MyFiperApp ${email}`);
-    router.push("/operations");
+    router.push("/");
+    // notificationInfo(`Welcome to MyFiperApp ${email}`);
   };
 
   return (
