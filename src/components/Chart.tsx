@@ -83,7 +83,9 @@ const Chart = ({ operations }: IProps) => {
     []
   );
   const [filteredGastosData, setFilteredGastosData] = useState<number[]>([]);
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(4);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(
+    new Date().getMonth()
+  );
   const [selectedYear, setSelectedYear] = useState<number | null>(2024);
 
   const [filteredIngresosDataByday, setFilteredIngresosDataByday] = useState<

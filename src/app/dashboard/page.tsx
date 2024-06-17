@@ -7,11 +7,17 @@ import { useSession } from "next-auth/react";
 
 const DashboardPage = () => {
   const [operations, setOperations] = useState<Operation[]>([]);
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const loadOperations = async (): Promise<Operation[]> => {
-      const response = await fetch("/api/operations");
+      const response = await fetch("/api/operations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: session?.user?.userId }),
+      });
       const operations = await response.json();
       // console.log("operations", operations);
       return operations;
@@ -20,7 +26,7 @@ const DashboardPage = () => {
     loadOperations().then((operations) => {
       setOperations(operations);
     });
-  }, []);
+  }, [session]);
 
   if (status === "loading") {
     return <p className="text-center">Loading...</p>;
