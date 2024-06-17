@@ -17,21 +17,23 @@ const OperationsPage = () => {
   useEffect(() => {
     const loadOperations = async (): Promise<Operation[]> => {
       const response = await fetch(`/api/operations`, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${session?.user?.token}`,
         },
+        body: JSON.stringify({ userId: session?.user?.userId }),
       });
 
       const operations = await response.json();
+      // console.log(operations);
       return operations;
     };
 
     loadOperations().then((operations) => {
       setOperations(operations);
     });
-  }, []);
+  }, [session?.user.userId]);
 
   if (status === "loading") {
     return <p className="text-center">Loading...</p>;

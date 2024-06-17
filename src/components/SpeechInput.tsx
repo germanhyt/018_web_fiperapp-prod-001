@@ -3,7 +3,7 @@ import React from "react";
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 
 const SpeechInput = (instanceRecognition: any) => {
-  console.log(instanceRecognition.hasRecognitionSupport);
+  // console.log(instanceRecognition.hasRecognitionSupport);
   return (
     <div>
       <div>

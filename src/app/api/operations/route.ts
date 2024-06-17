@@ -11,18 +11,35 @@ export async function GET() {
 // Nueva Operación
 export async function POST(request: NextRequest) {
   const data = await request.json();
+  // console.log(data);
 
-  const operation = await prisma.operations.create({
-    data: {
-      title: data.title,
-      description: data.description,
-      mount: data.mount,
-      operationtypeId: data.operationtypeId,
-      userId: data.userId,
-    },
-  });
+  if (data.userId && data.userId !== null && data.title) {
+    // console.log("POST /operation new");
+    const operation = await prisma.operations.create({
+      data: {
+        title: data.title,
+        description: data.description,
+        mount: data.mount,
+        operationtypeId: data.operationtypeId,
+        userId: data.userId,
+      },
+    });
 
-  return NextResponse.json({ message: "POST /operation " + operation.id });
+    return NextResponse.json({ message: "POST /operation " + operation.id });
+  } else {
+    if (data.userId && data.userId !== null) {
+      console.log("POST /operation list by userId");
+      const operations = await prisma.operations.findMany({
+        where: {
+          userId: data.userId,
+        },
+      });
+
+      return NextResponse.json(operations);
+    } else {
+      return NextResponse.json([]);
+    }
+  }
 }
 
 // Obtener la lista de operaciones por IdUsuario

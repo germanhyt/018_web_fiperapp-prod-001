@@ -29,7 +29,7 @@ const RegisterPage = () => {
     });
 
     const responseAPI = await res.json();
-    console.log("responseAPI", responseAPI);
+    // console.log("responseAPI", responseAPI);
 
     if (!res.ok) {
       setErrors(responseAPI.message);

@@ -64,7 +64,7 @@ const Filters = () => {
             type="month"
             value={filters.date.toISOString().split("T")[0].slice(0, 7)}
             onChange={(e) => {
-              console.log("original", e.target.value);
+              // console.log("original", e.target.value);
               if (e.target.value === "") {
                 setFilters({ ...filters, date: new Date() });
                 return;

@@ -25,7 +25,7 @@ export const FilterContext = createContext<FiltersContextType>({
     category: "",
     title: "",
     // horario de éru
-    date: new Date(datePeru),
+    date: new Date(),
   },
   setFilters: () => {},
 });
@@ -35,7 +35,7 @@ const FiltersProvider = ({ children }: IProps) => {
     minPrice: 0,
     category: "All",
     title: "",
-    date: new Date(datePeru),
+    date: new Date(),
   });
 
   return (

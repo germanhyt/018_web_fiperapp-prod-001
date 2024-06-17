@@ -22,7 +22,7 @@ const LoginPage = () => {
       redirect: false,
     });
 
-    console.log(responseNextAuth?.error);
+    // console.log(responseNextAuth?.error);
     if (responseNextAuth?.error) {
       notificationError(responseNextAuth.error);
       return;

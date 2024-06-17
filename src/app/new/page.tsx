@@ -26,7 +26,7 @@ const NewPage = ({ params }: IProps) => {
   const descriptionRecognition = useSpeechRecognition();
 
   // Session
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (titleRecognition.text) {
@@ -63,6 +63,7 @@ const NewPage = ({ params }: IProps) => {
       description: form.description.value,
       mount: Number(form.mount.value),
       operationtypeId: Number(form.operationtypeId.value),
+      userId: session?.user?.userId,
     };
     // console.log("LOG 2", operation);
 
@@ -76,7 +77,7 @@ const NewPage = ({ params }: IProps) => {
       });
 
       const data = await res.json();
-      console.log("LOG 3", data);
+      // console.log("LOG 3", data);
 
       router.refresh();
       router.push("/operations");
@@ -89,8 +90,8 @@ const NewPage = ({ params }: IProps) => {
         body: JSON.stringify(operation),
       });
 
-      const data = await res.json();
-      console.log(data);
+      await res.json();
+      // console.log(data);
 
       router.refresh();
       router.push("/operations");
@@ -216,8 +217,7 @@ const NewPage = ({ params }: IProps) => {
                         },
                       });
 
-                      const data = await res.json();
-                      console.log(data);
+                      await res.json();
 
                       router.refresh();
                       router.push("/operations");

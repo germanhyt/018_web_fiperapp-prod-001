@@ -6,7 +6,7 @@ import { generateToken, generateRefreshToken } from "@/core/libs/tokenManager";
 
 export async function POST(request, response) {
   const data = await request.json();
-  console.log(data);
+  // console.log(data);
 
   const user = await prisma.user.findUnique({
     where: {
@@ -44,8 +44,10 @@ export async function POST(request, response) {
   // console.log("response", response);
   generateRefreshToken(user.id, response);
 
-  const email = data.email;
+  const email = user.email;
+  const userId = user.id;
+  const name = user.name;
 
   // return NextResponse.json({ message: "User logged in" });
-  return NextResponse.json({ email, token, expiredIn });
+  return NextResponse.json({ userId, email, name, token, expiredIn });
 }

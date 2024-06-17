@@ -27,18 +27,17 @@ const useFilters = () => {
       //       filters.date?.toISOString().split("T")[0])
       // );
 
+      // console.log(operation.createdAt?.toString().split("T")[0].split("-")[1]);
+      // console.log(filters.date.toISOString().split("T")[0].split("-")[1]);
+
       // 2.
       return (
         operation.mount >= filters.minPrice &&
         (filters.category === "All" ||
           filters.category === operationCategory) &&
         operation.title.toLowerCase().includes(filters.title.toLowerCase()) &&
-        (Number(operation.createdAt?.toString().split("T")[0].split("-")[1]) -
-          2 ===
-          Number(filters.date.getMonth()) ||
-          Number(
-            operation.createdAt?.toString().split("T")[0].split("-")[1]
-          ) === 6) &&
+        Number(operation.createdAt?.toString().split("T")[0].split("-")[1]) ===
+          Number(filters.date.toISOString().split("T")[0].split("-")[1]) &&
         Number(operation.createdAt?.toString().split("T")[0].split("-")[0]) ===
           Number(filters.date.getFullYear())
       );
