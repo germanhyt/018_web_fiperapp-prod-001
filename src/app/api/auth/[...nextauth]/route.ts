@@ -1,9 +1,8 @@
 import NextAuth from "next-auth";
 import { prisma } from "@/core/libs/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
-import { notificationInfo } from "@/core/helpers";
 // import { notificationInfo } from "@/core/helpers";
 
 const handler = NextAuth({

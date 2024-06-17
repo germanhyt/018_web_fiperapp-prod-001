@@ -67,7 +67,9 @@ const LoginPage = () => {
 
       <button
         type="button"
-        onClick={() => signIn("google")}
+        onClick={() => {
+          signIn("google");
+        }}
         className="bg-green-600 text-white rounded p-2 flex items-center gap-2"
       >
         <FaGoogle />
