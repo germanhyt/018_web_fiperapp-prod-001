@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 // Obtener la lista de operaciones
 export async function GET() {
   const operations = await prisma.operations.findMany();
-  // console.log(operations);
 
   return NextResponse.json(operations);
 }
