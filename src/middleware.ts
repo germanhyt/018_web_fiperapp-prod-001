@@ -13,6 +13,10 @@ export { default } from "next-auth/middleware";
 
 // Rutas protegidas
 export const config = {
-  // matcher: "/api/:path*",
-  matcher: ["/dashboard/:path*", "/operations/:path*", "/new/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/operations/:path*",
+    "/new/:path*",
+    "/api/:path*",
+  ],
 };
