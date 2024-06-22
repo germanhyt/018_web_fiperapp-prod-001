@@ -1,5 +1,6 @@
 "use client";
 
+import { notificationError, notificationInfo } from "@/core/helpers";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,6 +17,10 @@ const RegisterPage = () => {
     event.preventDefault();
     setErrors([]);
 
+    if (!name || !email || !password) {
+      setErrors(["Todos los campos son requeridos"]);
+      return;
+    }
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/register`, {
       method: "POST",
       headers: {
@@ -28,11 +33,11 @@ const RegisterPage = () => {
       }),
     });
 
-    const responseAPI = await res.json();
-    // console.log("responseAPI", responseAPI);
+    const responseAPI = await res?.json();
+    console.log("responseAPI", responseAPI);
 
-    if (!res.ok) {
-      setErrors(responseAPI.message);
+    if (!responseAPI.ok) {
+      notificationError(responseAPI.message);
       return;
     }
 
@@ -42,17 +47,24 @@ const RegisterPage = () => {
       redirect: false,
     });
 
-    if (responseNextAuth?.error) {
-      setErrors(responseNextAuth.error.split(","));
+    if (!responseNextAuth?.ok) {
+      notificationError(responseNextAuth?.error ?? "");
       return;
     }
+
+    notificationInfo("Registrado correctamente");
+    router.refresh();
     router.push("/operations");
   };
 
   return (
     <div className="flex flex-col justify-center gap-4 items-center  w-4/5 sm:max-w-[450px] px-10 py-5 mx-auto my-20 border-2 border-black shadow-lg">
       <h1 className="font-bold text-xl">Register</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-2"
+        method="POST"
+      >
         <input
           type="text"
           placeholder="german"
@@ -86,6 +98,7 @@ const RegisterPage = () => {
       </form>
 
       <button
+        type="button"
         onClick={() => signIn("google")}
         className="bg-green-600 text-white rounded p-2 flex items-center gap-2"
       >

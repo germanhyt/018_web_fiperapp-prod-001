@@ -12,36 +12,46 @@ const handler = NextAuth({
       name: "Credentials",
       credentials: {
         email: {
-          label: "email",
+          label: "Email",
           type: "email",
           placeholder: "german@german.com",
         },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        if (!credentials?.email || !credentials.password) {
+          return null;
+        }
+
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
           {
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
             body: JSON.stringify({
               email: credentials?.email,
               password: credentials?.password,
             }),
-            headers: {
-              "Content-Type": "application/json",
-            },
           }
         );
 
         const user = await res.json();
-
         if (user.error) {
           throw new Error(user.message);
         }
-        return user;
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          randomKey: "Hey cool",
+        };
       },
     }),
     GoogleProvider({
+      name: "Google",
       // For Local
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,

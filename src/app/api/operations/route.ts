@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
   } else {
     if (data.userId && data.userId !== null) {
       // console.log("POST /operation list by userId");
-      const operations = await prisma.operations.findMany({
+      const operations = await prisma.operations?.findMany({
         where: {
           userId: data.userId,
         },

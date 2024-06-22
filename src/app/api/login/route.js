@@ -22,6 +22,7 @@ export async function POST(request, response) {
       status: 404,
       data: null,
       error: true,
+      ok: false,
     });
   }
 
@@ -31,13 +32,25 @@ export async function POST(request, response) {
   //     return NextResponse.json({ message: "Password is incorrect" });
   //   }
   if (!desencyptedPass) {
-    return NextResponse.json({ message: "Password is incorrect" });
+    return NextResponse.json({
+      message: "Password is incorrect",
+      status: 404,
+      data: null,
+      error: true,
+      ok: false,
+    });
   }
 
   // generate token
   const { token, expiredIn } = generateToken(user.id);
   if (!token) {
-    return NextResponse.json({ message: "Error generating token" });
+    return NextResponse.json({
+      message: "Error generating token",
+      status: 404,
+      data: null,
+      error: true,
+      ok: false,
+    });
   }
   // console.log("token", token);
   // console.log("expiredIn", expiredIn);
@@ -49,5 +62,14 @@ export async function POST(request, response) {
   const name = user.name;
 
   // return NextResponse.json({ message: "User logged in" });
-  return NextResponse.json({ userId, email, name, token, expiredIn });
+  return NextResponse.json({
+    userId,
+    email,
+    name,
+    token,
+    expiredIn,
+    ok: true,
+    status: 200,
+    error: false,
+  });
 }
