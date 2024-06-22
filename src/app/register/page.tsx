@@ -54,7 +54,7 @@ const RegisterPage = () => {
 
     notificationInfo("Registrado correctamente");
     router.refresh();
-    router.push("/operations");
+    router.push("/");
   };
 
   return (
